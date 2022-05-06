@@ -1,6 +1,9 @@
+
 const http = require('http');
 const fs = require('fs');
-
+/*import http from 'http';
+import fs from 'fs';
+import ba from 'bitcoinaverage';*/
 
 const port = 5555;
 
@@ -17,8 +20,8 @@ function cost(tiker){
       return -1;
   }); 
 } 
-  catch{
-    return 0;
+  catch (e){
+    return e;
   } 
 };
 
