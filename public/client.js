@@ -1,7 +1,24 @@
 //console.log('Client-side code running');
 
 const button = document.getElementById('myButton');
+const tbutton = document.getElementById('tikerbutton');
  
+document.body.onload = addElement;
+var my_div = newDiv = null;
+
+function addElement() {
+
+  // Создаём новый элемент div
+  // и добавляем в него немного контента
+
+  var newDiv = document.createElement("div");
+      newDiv.innerHTML = '<p align="center" id="new">Привет</p>';
+
+  // Добавляем только что созданный элемент в дерево DOM
+
+  my_div = document.getElementById("HRP");
+  document.body.insertBefore(newDiv, my_div);
+}
 
 setInterval(function() {
     fetch('/BTC', {method: 'GET'})
@@ -44,6 +61,17 @@ setInterval(function() {
       
   }, 2000);
 
+tbutton.addEventListener('click', function(e) {
+  console.log(1);
+  fetch('/customsale', {  
+    method: 'post',
+    headers: {'Content-Type': 'application/json;charset=utf-8'},
+    body: JSON.stringify({1: document.getElementById("tik").value}),
+})
+  .then(function(response) {
+    if(response.ok) alert('Ваши тикеры записаны');
+  })
+})
 
 button.addEventListener('click', function(e) {
   tgid = document.getElementById("tg").value;
