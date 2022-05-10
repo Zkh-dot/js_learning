@@ -1,24 +1,16 @@
 console.log('Server-side code running');
 
 const express = require('express');
-const { toRegex } = require('picomatch');
 
-const app = express();
+const app = express('express');
 
-var a;
 
-/*function check(ticker, res){
-    const ba = require('bitcoinaverage');
-    var restClient = ba.restfulClient('MDczYmVmNzEwNDE3NDVhZjgzMGY2NDIzZjViMGZjNzg');
-    
-    gloabl.a = restClient.getTickerDataPerSymbol('global', ticker, function(response) {
-    
-        var  response = Number(JSON.parse(response).last);
-        //console.log(response);
-    });
-}*/
+const ba = require('bitcoinaverage');
+var restClient = ba.restfulClient('MDczYmVmNzEwNDE3NDVhZjgzMGY2NDIzZjViMGZjNzg');
 
-// serve files from the public directory
+const RealtimeStock = require("pure-realtime-stock");
+const realtime = new RealtimeStock();
+
 app.use(express.static('public'));
 
 // parse application/x-www-form-urlencoded
@@ -45,8 +37,6 @@ app.post('/clicked', (req, res) => {
 
   app.get('/BTC', (req, res) => {
     //res.sendStatus(201);
-    const ba = require('bitcoinaverage');
-    var restClient = ba.restfulClient('MDczYmVmNzEwNDE3NDVhZjgzMGY2NDIzZjViMGZjNzg');
     
     restClient.getTickerDataPerSymbol('global', 'BTCUSD', function(response) {
     
@@ -60,8 +50,6 @@ app.post('/clicked', (req, res) => {
 
   app.get('/ETH', (req, res) => {
     //res.sendStatus(201);
-    const ba = require('bitcoinaverage');
-    var restClient = ba.restfulClient('MDczYmVmNzEwNDE3NDVhZjgzMGY2NDIzZjViMGZjNzg');
     
     restClient.getTickerDataPerSymbol('global', 'ETHUSD', function(response) {
     
@@ -73,8 +61,6 @@ app.post('/clicked', (req, res) => {
   });
   app.get('/LTC', (req, res) => {
     //res.sendStatus(201);
-    const ba = require('bitcoinaverage');
-    var restClient = ba.restfulClient('MDczYmVmNzEwNDE3NDVhZjgzMGY2NDIzZjViMGZjNzg');
     
     restClient.getTickerDataPerSymbol('global', 'LTCUSD', function(response) {
     
@@ -84,6 +70,19 @@ app.post('/clicked', (req, res) => {
     });
     
   });
+
+  app.post('/customsale', (request, response) => {
+    const tiker = request.body[1];
+    console.log(tiker);
+    realtime.getPrice(tiker).then(price =>{ 
+      console.log(price);
+      response.send([201, price])
+    });
+
+    
+    
+  });
+
 
 app.post('/tg', (request, response) => {
     const tg_id = request.body;
@@ -102,4 +101,5 @@ app.post('/tg', (request, response) => {
 
 const { append } = require('./bot.js');
 const { launchbot } = require('./bot.js');
+const now = require('performance-now');
 launchbot();

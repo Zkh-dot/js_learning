@@ -1,7 +1,9 @@
 const { Telegraf } = require("telegraf");
 
 // Создать бота с полученным ключом
-const bot = new Telegraf();
+const bot = new Telegraf("1281706952:AAE7mGz4yekYYsqNlKLs3D4mtdg9MBIPxek");
+const ba = require('bitcoinaverage');
+var restClient = ba.restfulClient('MDczYmVmNzEwNDE3NDVhZjgzMGY2NDIzZjViMGZjNzg');
 
 var ticers = {}
 
@@ -13,8 +15,7 @@ function isNumber(n){
 
 async function check( )
 {
-  const ba = require('bitcoinaverage');
-  var restClient = ba.restfulClient('');
+
   for(var tiker in ticers)
   {    
     console.log(tiker);
