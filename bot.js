@@ -1,9 +1,9 @@
 const { Telegraf } = require("telegraf");
 
 // Создать бота с полученным ключом
-const bot = new Telegraf("1281706952:AAE7mGz4yekYYsqNlKLs3D4mtdg9MBIPxek");
+const bot = new Telegraf("");
 const ba = require('bitcoinaverage');
-var restClient = ba.restfulClient('MDczYmVmNzEwNDE3NDVhZjgzMGY2NDIzZjViMGZjNzg');
+var restClient = ba.restfulClient("");
 
 var ticers = {}
 
