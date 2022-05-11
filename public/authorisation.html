@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>authorisation</title>
+  </head>
+  <body bgcolor="#c0c0c0" bgproperties="fixed">
+    <p>Введите телеграмм для регистрации:
+        <input id="tgauth", type="text" size="40">
+    </p> 
+    <button align="center" id="authorisation">Войти</button>
+    <p>Помните: для корректной работы бота надо написать ему команду /start</p> 
+    <p>Бота можно найти по адресу: https://t.me/FiCaDi_bot</p> 
+  </body>
+  <script >
+    const auth = document.getElementById('authorisation');
+    auth.addEventListener('click', function(e) {
+  console.log(1);
+  fetch('/auth', {  
+    method: 'post',
+    headers: {'Content-Type': 'application/json;charset=utf-8'},
+    body: JSON.stringify({1: document.getElementById("tgauth").value}),
+})
+})
+    
+  </script>
+</html>
