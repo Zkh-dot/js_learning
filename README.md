@@ -1,4 +1,4 @@
-# js_learning
+## js_learning
  ### Here u can find code for labs 6-8  
 
 #### launching 
