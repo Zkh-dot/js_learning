@@ -1,11 +1,26 @@
 const { Telegraf } = require("telegraf");
 
 // Создать бота с полученным ключом
-const bot = new Telegraf();
+const bot = new Telegraf("1281706952:AAE7mGz4yekYYsqNlKLs3D4mtdg9MBIPxek");
+const ba = require('bitcoinaverage');
+var restClient = ba.restfulClient('MDczYmVmNzEwNDE3NDVhZjgzMGY2NDIzZjViMGZjNzg');
 
 var ticers = {}
 
 var users = {}
+
+var extra_tikers = {}
+
+function get_extract(name, tik = ''){
+  if(extra_tikers[name] == undefined){
+    extra_tikers[name] = [];
+  }
+  if(tik != ''){
+    //console.log(extra_tikers[name]);
+    extra_tikers[name].push(tik);
+  }
+  return(extra_tikers[name]);
+}
 
 function isNumber(n){
   return Number(n)=== n;
@@ -13,8 +28,7 @@ function isNumber(n){
 
 async function check( )
 {
-  const ba = require('bitcoinaverage');
-  var restClient = ba.restfulClient('');
+
   for(var tiker in ticers)
   {    
     console.log(tiker);
@@ -28,7 +42,7 @@ async function check( )
           //console.log(ticers[tiker][price]); 
           if(Math.floor(response / 100) == Math.floor(price / 100))
           {
-            bot.telegram.sendMessage(ticers[tiker][price], tiker + ' достиг цели в ' + response.toString( ) + 'долларова');
+            bot.telegram.sendMessage(ticers[tiker][price], tiker + ' достиг цели в ' + response.toString( ) + ' долларова');
             delete ticers[tiker][price]; 
             delete ticers[tiker];      
           }
@@ -37,10 +51,6 @@ async function check( )
               console.log(error); 
           });
         }
-        
-    
-     
- 
 }
 
 }
@@ -91,6 +101,12 @@ bot.command("price", (ctx) => {
       console.log(error);
   } ) ;
 }  );
+
+bot.command("addtiker", (ctx) => {
+  var tiker = ctx.message.text.split(' ')[1]; 
+  get_extract(ctx.message.chat.username, tiker);
+  return ctx.replyWithMarkdown(`Ваш тикер добавлен`)
+}  );
   
 function append(tiker, price, id)
 {
@@ -127,4 +143,5 @@ function launchbot(){
 module.exports = {
   append,
   launchbot,
+  get_extract,
 };
