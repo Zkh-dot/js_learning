@@ -88,7 +88,7 @@ bot.command("price", (ctx) => {
   const ba = require('bitcoinaverage');
   var tiker = ctx.message.text.split(' ')[1] + 'USD'; 
   //console.log(tiker);
-  var restClient = ba.restfulClient('MDczYmVmNzEwNDE3NDVhZjgzMGY2NDIzZjViMGZjNzg');
+  var restClient = ba.restfulClient(' ');
   
   restClient.getTickerDataPerSymbol('global', tiker, function(response) {
       
