@@ -7,7 +7,7 @@ const app = express('express');
 var name = {};
 
 const ba = require('bitcoinaverage');
-var restClient = ba.restfulClient('MDczYmVmNzEwNDE3NDVhZjgzMGY2NDIzZjViMGZjNzg');
+var restClient = ba.restfulClient(' ');
 
 
 var cookieParser = require('cookie-parser');
