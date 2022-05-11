@@ -1,10 +1,9 @@
 # js_learning
  ### Here u can find code for labs 6-8  
 
-#### launching
-```
-to launch project use "node server.js" command in folder vs server.js
-```
+#### launching 
+to launch project use ```node server.js``` command in folder vs server.js
+ 
 
 Folder "public" is visible for user. There u can find module "client.js", which is for taking info from "nindex.html", creating requests for server and returning info to html to make it visible to user
 
