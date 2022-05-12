@@ -148,3 +148,8 @@ function append(tiker, price, id)
         ticers[tiker][price] = users[id];
 }
 ```
+
+## How to start ur own progect:
+Here express start: ``` https://expressjs.com/ru/starter/installing.html ```
+
+And here hello world example ``` https://expressjs.com/ru/starter/hello-world.html  ```
