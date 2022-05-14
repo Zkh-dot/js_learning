@@ -5,7 +5,13 @@ const fs = require('fs');
 var users = {};
 
 var test = {};
+
+var timer = {}
  
+
+function isNumber(n){
+  return Number(n)=== n;
+}
 
 // Создать бота с полученным ключом
 const bot = new Telegraf("1059442764:AAFlPFEROwxIGxPIK8mgEmO-pusoG77docg");
@@ -15,6 +21,7 @@ bot.start((ctx) =>
   {
     users[ctx.chat.id] = ctx.message.text.split(' ')[1];
     test[ctx.chat.id] = 1;
+    timer[ctx.chat.id] = 10000;
     ctx.reply(
     `Приветствую, ${
        ctx.from.first_name ? ctx.from.first_name : "хороший человек"
@@ -40,6 +47,28 @@ bot.command("test", async (ctx) =>
     ctx.telegram.sendMessage(userid, 'Перевел вас обратно в тестовый режим. Ваш канал сброшен.');  
     delete users[userid];
     test[ctx.chat.id] = 1;
+  }
+)
+
+bot.command("timer", async (ctx) => 
+  {
+    var userid = ctx.chat.id;
+    var time = ctx.message.text.split(' ')[1];
+    try
+    {
+      time = parseInt(time);
+      if(time == NaN){    //этот if не работает по неочевидным причинам
+        ctx.telegram.sendMessage(userid, `Вы не ввели число`);
+      }
+      else
+      {
+        ctx.telegram.sendMessage(userid, `${time} минут(ы) взято за таймер между постами, спасибо.`); 
+        timer[ctx.chat.id] = time * 60000;
+      }
+    }
+    catch (e){
+      ctx.telegram.sendMessage(userid, `Попробуйте еще раз, ${e}`);
+    }
   }
 )
 
