@@ -8,7 +8,7 @@
 4. use command ```npm i telegraf --save```
 5. use command ```npm i bitcoinaverage --save```
 6. use command ```npm i fs --save```
-7. create files "index.js", "bot.js" and copy content from git
+7. create files "server.js", "bot.js" and copy content from git
 8. create folder "public" and there files "client.js", "ndx.html" and copy content from git
 9. now in folder vs index.js use command ```node index.js``
 
