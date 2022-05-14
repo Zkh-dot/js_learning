@@ -10,7 +10,7 @@
 6. use command ```npm i fs --save```
 7. create files "server.js", "bot.js" and copy content from git
 8. create folder "public" and there files "client.js", "ndx.html" and copy content from git
-9. now in folder vs index.js use command ```node index.js```
+9. now in folder vs index.js use command ```node server.js```
 
 #### launching 
 to launch project use ```node server.js``` command in folder vs server.js
