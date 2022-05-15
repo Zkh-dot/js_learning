@@ -1,5 +1,4 @@
 const { Telegraf } = require("telegraf");
-const needle = require('needle');
 const fs = require('fs');
 const { token } = require('./token.js');
 
@@ -29,7 +28,8 @@ bot.help((ctx =>
 При помощи команды /test можно вернутся в тестовый режим 
       
 Я буду пересылать все фото, которые ты мне скинешь в твой канал. 
-Ты можешь выставить таймер при помощи команды /timer + [минуты], тогда я буду отправлять полученные от тебя фото раз в установленное кол-во минут, делая постингв твоем канале более регулярным \n 
+Ты можешь выставить таймер при помощи команды /timer + [минуты], тогда я буду отправлять полученные от тебя фото раз в установленное кол-во минут, делая постингв твоем канале более регулярным 
+При помощи команды /go можно запустить отправку загруженных тобой фото в твой канал с установленным таймером
 По вопросам связанным с ботом можно обращаться к @Lunitary \n
 p.s. И да, я умею в авторизацию и больше чем одного пользователя :з
 `)
@@ -70,6 +70,18 @@ bot.command("test", async (ctx) =>
   }
 )
 
+bot.command("stat", async(ctx) =>{
+  fetch(`https://api.telegram.org/bot${token()}/getChatMembersCount?chat_id=${ctx.message.text.split(' ')[1]}`)
+  .then(function(response) {
+    if(response.ok) return response.json();
+    throw new Error('Request failed.');
+  })
+  .then(function(data) {
+    ctx.reply(`Количество подписчиков в канале ${ctx.message.text.split(' ')[1]} = ${data["result"]}`);
+  })
+
+})
+
 bot.command("timer", async (ctx) => 
   {
     var userid = ctx.chat.id;
@@ -104,25 +116,28 @@ bot.command("timer", async (ctx) =>
 
 bot.command("go", async(ctx) =>
 {
+  ctx.reply("начал отправлять фото в ваш канал");
+  try{
   setInterval(function() {
-    try{
+    
       for(i in Object.keys(photos)){
         key = Object.keys(photos)[i];
-        console.log(photos[i]);
+        //console.log(photos[i]);
         if(photos[key][0] != undefined)
         {
             let photo = photos[key][0];
             photos[key].splice(0, 1);
             ctx.telegram.sendPhoto(key, photo[0], {'caption': ctx.message.caption});
         }
-        console.log(key, 'in', photos);
-    }}
+        //console.log(key, 'in', photos);
+    }
+   
+    
+    }, timer[ctx.chat.id]);}
     catch(e){
       ctx.reply("Ошибка:", e);
       return(e);
     }
-    
-    }, 1000);
     
 })
 
@@ -140,7 +155,7 @@ bot.on('photo', (ctx) => {
   console.log(toid);
   photos[toid].push([ctx.message.photo[file].file_id, {'caption': ctx.message.caption}, ctx.chat.id, ctx.telegram]);
   ctx.reply('Фото получено');
-  console.log(photos[toid][0]);
+  //console.log(photos[toid][0]);
   /*ctx.telegram.sendPhoto(
       toid,
       ctx.message.photo[file].file_id,
