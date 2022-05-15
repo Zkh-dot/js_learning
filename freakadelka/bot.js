@@ -14,7 +14,7 @@ function isNumber(n){
 }
 
 // Создать бота с полученным ключом
-const bot = new Telegraf("1059442764:AAFlPFEROwxIGxPIK8mgEmO-pusoG77docg");
+const bot = new Telegraf();
 
 // Обработчик начала диалога с ботом
 bot.start((ctx) =>
